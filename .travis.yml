@@ -36,3 +36,26 @@ jobs:
         - make -C lib/go protoc-gen-go
       script:
         - make -C lib/go
+    - arch: arm64 
+      stage:               test
+      script:              make
+
+    # The lang stages validate the specification using
+    # language-specific bindings.
+
+    # Lang stage: Cxx
+    - arch: arm64 
+      stage:               lang
+      script:              make -C lib/cxx
+
+    # Lang stage: Go
+    - arch: arm64
+      stage:               lang
+      language:            go
+      go:                  1.10.4
+      go_import_path:      github.com/container-storage-interface/spec
+      install:
+        - make -C lib/go protoc
+        - make -C lib/go protoc-gen-go
+      script:
+        - make -C lib/go
